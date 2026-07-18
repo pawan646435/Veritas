@@ -17,3 +17,9 @@ class TargetAgentError(VeritasError):
 
 class JudgeError(VeritasError):
     """Raised when a judge fails to produce a valid, parseable verdict."""
+
+
+class TestGenerationError(VeritasError):
+    """Raised when the test generator produces JSON that can't be parsed
+    into valid TestCase objects at all (not to be confused with a single
+    malformed test case, which we skip and log instead of raising)."""
