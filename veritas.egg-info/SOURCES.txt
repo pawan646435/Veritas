@@ -14,10 +14,12 @@ app/schemas/__init__.py
 app/schemas/models.py
 app/services/__init__.py
 app/services/judges.py
+app/services/reporter.py
 app/services/test_generator.py
 app/services/test_runner.py
 tests/test_finance_agent.py
 tests/test_judges.py
+tests/test_reporter.py
 tests/test_schemas.py
 tests/test_test_generator.py
 tests/test_test_runner.py
