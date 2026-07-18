@@ -136,3 +136,11 @@ veritas/
 - Cost/latency tradeoffs — why Groq, how caching and cheaper models control cost at scale.
 - Failure handling — what happens when the LLM API times out or rate-limits mid-audit (tenacity retries).
 - Schema-first design — why Pydantic at every boundary prevents silent data corruption.
+- **A real example of judge unreliability I found**: in an actual run, the
+  finance agent contradicted its own successful tool call (said "no data"
+  for a ticker it had just successfully looked up). Two of three judges
+  caught it; the groundedness judge incorrectly passed it, having pattern-
+  matched on the surface phrasing "I don't have the data" without cross-
+  checking the transcript's own tool call result. See `FINDINGS.md` for the
+  full transcript — this is real evidence for why meta-eval matters, not a
+  hypothetical.
