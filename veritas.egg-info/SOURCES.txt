@@ -1,6 +1,9 @@
 pyproject.toml
 app/__init__.py
 app/agents/__init__.py
+app/agents/base.py
+app/agents/finance_agent.py
+app/agents/mock_stock_data.py
 app/api/__init__.py
 app/core/__init__.py
 app/core/config.py
@@ -10,6 +13,7 @@ app/db/__init__.py
 app/schemas/__init__.py
 app/schemas/models.py
 app/services/__init__.py
+tests/test_finance_agent.py
 tests/test_schemas.py
 veritas.egg-info/PKG-INFO
 veritas.egg-info/SOURCES.txt

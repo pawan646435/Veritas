@@ -32,6 +32,16 @@ class ToolCall(BaseModel):
     result: str
 
 
+class AgentResponse(BaseModel):
+    """What a target agent hands back for one question — before we know
+    which TestCase it was answering. The test runner (Phase 3) combines
+    this with a TestCase to build a full Transcript.
+    """
+
+    tool_calls: list[ToolCall] = Field(default_factory=list)
+    final_answer: str
+
+
 class Transcript(BaseModel):
     """Everything that happened when we ran one TestCase against the target agent."""
 
