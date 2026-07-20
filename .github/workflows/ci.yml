@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    # Dummy, non-secret values — the test suite mocks every external call
+    # (Groq, judges) and uses an in-memory SQLite database, so these just
+    # need to exist for Settings' fail-fast validation to pass, not be real.
+    env:
+      GROQ_API_KEY: dummy_key_for_ci
+      DATABASE_URL: sqlite+aiosqlite:///./ci_test.db
+      ENVIRONMENT: test
+      LOG_LEVEL: INFO
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          # Pinned to a stable, widely-supported version deliberately —
+          # not necessarily whatever bleeding-edge version is on a local
+          # dev machine. CI reproducibility matters more than being on
+          # the newest release.
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -e ".[dev]"
+
+      - name: Lint with ruff
+        run: ruff check .
+
+      - name: Run tests
+        run: pytest -v
+        
