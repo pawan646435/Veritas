@@ -115,7 +115,7 @@ veritas/
 - [ ] Phase 3 — test runner (executes cases, captures transcripts)
 - [ ] Phase 4 — judge panel (groundedness, tool-use, task-completion judges)
 - [ ] Phase 5 — reporter (pandas aggregation, hallucination rate, categorized failures)
-- [ ] Phase 6 — meta-eval (hand-labeled sample vs. judge agreement)
+- [x] Phase 6 — meta-eval (hand-labeled sample vs. judge agreement)
 - [ ] Phase 7 — persistence (Postgres + Alembic migrations)
 - [ ] Phase 8 — FastAPI wrapper + Docker + CI
 - [ ] Phase 9 — deploy to Cloud Run, point auditor at AlphaMatrix's real agent
@@ -144,3 +144,14 @@ veritas/
   checking the transcript's own tool call result. See `FINDINGS.md` for the
   full transcript — this is real evidence for why meta-eval matters, not a
   hypothetical.
+- **The formal meta-eval result (headline finding)**: ran a 25-case blind
+  human-vs-judge comparison. Groundedness agreed with my independent
+  judgment on 92% of cases; tool_use only 64%. The single most concrete
+  piece of evidence: the tool_use judge once justified a failing verdict
+  by claiming a tool call "requires a different time frame argument" —
+  but the actual tool schema has exactly one parameter, `ticker`, and
+  never had a time parameter at all. A judge built to catch hallucination
+  hallucinated a tool capability that never existed, while grading tool
+  use. This is the single strongest, most quotable piece of evidence in
+  the whole project for why LLM-as-judge requires validation, not blind
+  trust — see `FINDINGS.md` Finding 5 for the full write-up.
