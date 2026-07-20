@@ -2,7 +2,9 @@ venv/
 __pycache__/
 *.pyc
 .env
+.git/
 .pytest_cache/
 .ruff_cache/
 *.egg-info/
+reports/
 .DS_Store
