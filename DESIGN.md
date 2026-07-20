@@ -117,7 +117,7 @@ veritas/
 - [ ] Phase 5 — reporter (pandas aggregation, hallucination rate, categorized failures)
 - [x] Phase 6 — meta-eval (hand-labeled sample vs. judge agreement)
 - [ ] Phase 7 — persistence (Postgres + Alembic migrations)
-- [ ] Phase 8 — FastAPI wrapper + Docker + CI
+- [x] Phase 8 — FastAPI wrapper + Docker + CI
 - [ ] Phase 9 — deploy to Cloud Run, point auditor at AlphaMatrix's real agent
 - [ ] Phase 10 — README, write-up, resume bullet
 

@@ -1,10 +1,12 @@
 pyproject.toml
 app/__init__.py
+app/main.py
 app/agents/__init__.py
 app/agents/base.py
 app/agents/finance_agent.py
 app/agents/mock_stock_data.py
 app/api/__init__.py
+app/api/routes.py
 app/core/__init__.py
 app/core/config.py
 app/core/exceptions.py
@@ -21,6 +23,7 @@ app/services/meta_eval.py
 app/services/reporter.py
 app/services/test_generator.py
 app/services/test_runner.py
+tests/test_api.py
 tests/test_finance_agent.py
 tests/test_judges.py
 tests/test_meta_eval.py
