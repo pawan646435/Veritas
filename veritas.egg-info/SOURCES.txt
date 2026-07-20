@@ -10,6 +10,9 @@ app/core/config.py
 app/core/exceptions.py
 app/core/logging.py
 app/db/__init__.py
+app/db/models.py
+app/db/repository.py
+app/db/session.py
 app/schemas/__init__.py
 app/schemas/models.py
 app/services/__init__.py
@@ -22,6 +25,7 @@ tests/test_finance_agent.py
 tests/test_judges.py
 tests/test_meta_eval.py
 tests/test_reporter.py
+tests/test_repository.py
 tests/test_schemas.py
 tests/test_test_generator.py
 tests/test_test_runner.py
