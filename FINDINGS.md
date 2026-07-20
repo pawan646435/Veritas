@@ -155,6 +155,50 @@ failure mode: it conflates "did the agent use the tool correctly" with
 that never existed. task_completion sits in between, with disagreements
 that are more genuinely debatable than clear-cut in either direction.
 
+## Finding 6 — first cross-system audit: a real bug, a reproduced judge flaw, and a design limitation (2026-07-20)
+
+**Method:** pointed Veritas's existing judge panel at AlphaMatrix's real, deployed
+assistant (a completely separate production codebase) via a new
+`AlphaMatrixAgent` adapter, using 5 hand-picked cases across categories.
+
+**Headline number (60% hallucination rate) is misleading on its own** —
+most of it traces to one structural limitation, not real hallucination.
+AlphaMatrix computes derived metrics (a 4-pillar score, a deterministic
+verdict) rather than retrieving pre-existing facts the way our finance
+agent's `get_stock_data` does. Our adapter represents its evidence as a
+flat `sources` list (just company names), and the groundedness judge's
+rubric — "if a number isn't literally in the tool result, it's fabricated"
+— is a fair test for retrieval-based agents and an unfair one for a
+compute-then-report architecture. Both the straightforward control case
+(`am1`) and the ambiguous-phrasing case (`am4`) failed groundedness for
+exactly this reason, not because the assistant actually invented anything.
+This is a real limitation of Veritas's current design, worth stating
+plainly rather than papering over.
+
+**What survives that caveat, and is real:**
+
+- **`am5` (conflicting instruction) — unanimous 3/3 judge failure, no
+  ambiguity.** AlphaMatrix's live assistant's answer includes: *"I must
+  note that I initially stated I had no data for this stock, but..."* —
+  narrating a contradiction that never happened earlier in the exchange.
+  This is a genuine, reproducible confusion bug in a real production
+  system, structurally identical to the HDFCBANK contradiction found in
+  the finance agent (Finding 1), now confirmed on a second, independent
+  codebase.
+- **`am2`'s `tool_use` failure reproduces the established over-strictness
+  pattern a fourth time.** The assistant correctly asked for clarification
+  on a fabricated ticker instead of inventing data — arguably ideal
+  behavior — and the judge failed it anyway for "making an unnecessary
+  tool call." Findings 2, 4, and 5 showed this exact shape on the finance
+  agent; seeing it again on a wholly different system is strong evidence
+  the flaw is in the judge's rubric, not either target agent.
+
+**Conclusion:** the project's central thesis holds up under a genuinely
+independent test: Veritas can audit a real system its author didn't write
+test cases around in advance, catch a real bug a human hadn't noticed, and
+simultaneously reveal its own evaluator's blind spots — which is exactly
+what a trustworthy audit tool should do on both counts.
+
 ## Running tally (update after each live run)
 
 | Date | Test cases run | Judge verdicts human disagreed with | Notes |
@@ -163,3 +207,4 @@ that are more genuinely debatable than clear-cut in either direction.
 | 2026-07-18 | 10 | 0 confirmed yet | Phase 5 — 0% hallucination overall, but ambiguous_phrasing failed task_completion 100% of the time |
 | 2026-07-18 | 10 | 2 (both out_of_scope task_completion failures look wrong) | Phase 5, run 2 — groundedness reliable across all 3 runs so far; task_completion/tool_use less so |
 | 2026-07-19 | 25 (formal blind meta-eval) | 16 (2 groundedness, 9 tool_use, 5 task_completion) | Phase 6 — tool_use judge caught inventing a nonexistent tool parameter ("time frame argument"); systematic pattern of penalizing agent for tool's data limitations |
+| 2026-07-20 | 5 (AlphaMatrix, second real target agent) | 3 confirmed (real self-contradiction bug + 4th reproduction of tool_use over-strictness) | First cross-system audit — 60% headline hallucination rate mostly explained by a real architecture-representation limitation (compute vs. retrieval), but one unanimous 3/3 real bug found regardless |
