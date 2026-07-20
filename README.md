@@ -4,6 +4,8 @@
 
 **An autonomous agent that audits other AI agents — catching hallucinated facts, misused tools, and unanswered questions, then validating its own judgment against a human, blind.**
 
+**Live:** https://veritas-o3co.onrender.com/docs — interactive API docs; click "Try it out" on any endpoint to run it directly in your browser. (Free-tier hosting: the first request after a period of inactivity takes 30-60s to wake up — that's expected, not a bug.)
+
 ## The problem
 
 Every team shipping an LLM agent — a support bot, a financial assistant, a

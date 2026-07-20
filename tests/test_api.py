@@ -11,6 +11,10 @@ def test_health_check_returns_ok():
     assert response.json() == {"status": "ok"}
 
 
+def test_root_redirects_to_docs():
+    response = client.get("/", follow_redirects=False)
+    assert response.status_code in (302, 307)
+    assert response.headers["location"] == "/docs"
 def test_audit_routes_are_registered():
     """A lightweight structural check — confirms the routes exist without
     actually calling them, since /audits/run and /audits/report need a
